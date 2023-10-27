@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.Events;
 
-namespace Volorf.Figmage
+namespace Volorf.FigmaUIImage
 {
     [Serializable] public class FigmaUIImageEvent : UnityEvent<FigmaUIImageData> {}
 }

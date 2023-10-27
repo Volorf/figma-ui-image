@@ -3,13 +3,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Volorf.Figmage
+namespace Volorf.FigmaUIImage
 {
     [CustomEditor(typeof(FigmaUIImage))]
     public class FigmaUiImageInspector : Editor
     { 
-        VisualTreeAsset ui;
-        
+        VisualTreeAsset _ui;
         FigmaUIImage _figmaUiImage;
         VisualElement _previewContainer;
         VisualElement _root;
@@ -17,26 +16,10 @@ namespace Volorf.Figmage
 
         public override VisualElement CreateInspectorGUI()
         {
-            // ui = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/MyCustomEditor.uxml")
-            ui = Resources.Load<VisualTreeAsset>("FigmaUiImageInspector");
-            Debug.Log(ui.name);
-            // string[] uiPaths = AssetDatabase.FindAssets("FigmaUiImageInspector", null);
-            // Debug.Log(uiPaths[0]);
-            // string[] links = 
-            //
-            // if (links != null)
-            // {
-            //     string path = AssetDatabase.GUIDToAssetPath(links[0]);
-            //     preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));
-            // }
-            
-            // Root UI
+            _ui = Resources.Load<VisualTreeAsset>("FigmaUiImageInspector");
             _root = new VisualElement();
-            
-            // Get an instance of the main script
             _figmaUiImage = target as FigmaUIImage;
-
-            ui.CloneTree(_root);
+            _ui.CloneTree(_root);
             
             // Get references
             _previewContainer = _root.Q<VisualElement>("Container");
@@ -49,17 +32,11 @@ namespace Volorf.Figmage
             _figmaUiImage.OnUiImageUpdated.AddListener(UpdatePreview);
             _figmaUiImage.OnUploadingFailed.AddListener(SetDefault);
             
-            // vel.RegisterCallback<TransitionEndEvent>(evt => vel.ToggleInClassList("preloadingAnimator"));
-            // root.schedule.Execute(() => vel.ToggleInClassList("preloadingAnimator")).StartingIn(100);
-
-            
-            // Have it here because it wired up to editor's updates, which might happen often
             if (_figmaUiImage.GetRawImage() != null)
             {
                 UpdatePreview(new FigmaUIImageData(_figmaUiImage.GetRawImage().texture, _figmaUiImage.GetScale()));
             }
-                
-            // fignity.UpdateFigmaImage();
+            
             return _root;
         }
 

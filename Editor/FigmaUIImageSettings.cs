@@ -3,14 +3,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Volorf.Figmage
+namespace Volorf.FigmaUIImage
 {
     public class FigmaUIImageSettings : EditorWindow
     {
         VisualTreeAsset _ui;
-
         static FigmaUIImageSettings _wnd;
-
         TextField _field;
         const string FigmaTokenKeyName = "FIGMA_TOKEN";
 

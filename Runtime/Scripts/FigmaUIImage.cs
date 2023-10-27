@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Volorf.Figmage
+namespace Volorf.FigmaUIImage
 {
     [ExecuteInEditMode]
     [AddComponentMenu("Volorf/Figma UI Image")]
@@ -19,11 +19,11 @@ namespace Volorf.Figmage
         public UnityEvent OnUploadingFailed = new UnityEvent();
         
         [TextArea(3, 6)] public string figmaLink = "";
-
         [SerializeField] float imageScale = 2f;
-        string _mainFigmaLinkPart = "https://www.figma.com/file/";
-        string _baseFigmaImageURL = "https://api.figma.com/v1/images/";
-        string _baseFigmaDocumentURL = "https://api.figma.com/v1/files/";
+        
+        const string MainFigmaLinkPart = "https://www.figma.com/file/";
+        const string BaseFigmaImageUrl = "https://api.figma.com/v1/images/";
+        const string BaseFigmaDocumentUrl = "https://api.figma.com/v1/files/";
 
         string _token;
         string _figmaFileKey;
@@ -86,8 +86,6 @@ namespace Volorf.Figmage
             {
                 texture = _rawImage.texture;
             }
-
-            
         }
 
         void Start()
@@ -114,10 +112,10 @@ namespace Volorf.Figmage
             {
                 string nodeId = GetNodeId(figmaLink);
 
-                string finalImageUrl = CombineImageUrl(_baseFigmaImageURL, fileKey, nodeId, imageScale);
+                string finalImageUrl = CombineImageUrl(BaseFigmaImageUrl, fileKey, nodeId, imageScale);
                 StartCoroutine(RequestImageLinkFromFigma(finalImageUrl));
 
-                string finalDocUrl = CombineDocumentUrl(_baseFigmaDocumentURL, fileKey, nodeId);
+                string finalDocUrl = CombineDocumentUrl(BaseFigmaDocumentUrl, fileKey, nodeId);
                 StartCoroutine(RequestDocumentFromFigma(finalDocUrl));
             }
             else
@@ -143,7 +141,7 @@ namespace Volorf.Figmage
 
         string GetFileKey(string link)
         {
-            string cutFirstPartFigmaLink = link.Replace(_mainFigmaLinkPart, "");
+            string cutFirstPartFigmaLink = link.Replace(MainFigmaLinkPart, "");
             int removeIndex = cutFirstPartFigmaLink.IndexOf("/");
 
             if (removeIndex < 0)

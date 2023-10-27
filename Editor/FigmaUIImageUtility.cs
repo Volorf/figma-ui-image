@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Volorf.Figmage
+namespace Volorf.FigmaUIImage
 {
     // Creates a GameObject in a scene via the context menu
     public class FigmaUIImageUtility : MonoBehaviour
@@ -11,10 +11,11 @@ namespace Volorf.Figmage
         public static void AddFigImage()
         {
             GameObject newObject = new GameObject("Figma UI Image");
-            print("Figma UI Image has been added");
             RawImage rawImage = newObject.AddComponent<RawImage>();
             FigmaUIImage figmaUiImage = newObject.AddComponent<FigmaUIImage>();
-
+            
+            Debug.Log("Figma UI Image has been added");
+            
             if (Selection.activeGameObject == null)
             {
                 Canvas canvas = GameObject.FindObjectOfType<Canvas>();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Volorf.Figmage
+namespace Volorf.FigmaUIImage
 {
     public class FigmaUIImageData
     {

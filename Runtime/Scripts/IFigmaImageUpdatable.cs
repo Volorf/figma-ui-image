@@ -1,4 +1,4 @@
-namespace Volorf.Figmage
+namespace Volorf.FigmaUIImage
 {
     public interface IFigmaImageUpdatable
     {
