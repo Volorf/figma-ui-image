@@ -7,7 +7,7 @@ namespace Volorf.Figmage
 {
     public class FigmaUIImageSettings : EditorWindow
     {
-        [SerializeField] private VisualTreeAsset _visualTreeAsset = default;
+        VisualTreeAsset _ui;
 
         static FigmaUIImageSettings _wnd;
 
@@ -37,8 +37,9 @@ namespace Volorf.Figmage
 
         public void CreateGUI()
         {
+            _ui = Resources.Load<VisualTreeAsset>("FigmaUIImageSettings");
             VisualElement root = rootVisualElement;
-            VisualElement labelFromUXML = _visualTreeAsset.Instantiate();
+            VisualElement labelFromUXML = _ui.Instantiate();
             root.Add(labelFromUXML);
 
             Button apply = root.Q<Button>("Apply");
