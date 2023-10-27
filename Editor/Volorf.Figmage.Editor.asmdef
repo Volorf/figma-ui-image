@@ -1,0 +1,16 @@
+{
+    "name": "Volorf.Figmage.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c09f8edfaab874bdbb7a60d19969c537"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
