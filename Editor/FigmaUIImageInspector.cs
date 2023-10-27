@@ -8,7 +8,7 @@ namespace Volorf.Figmage
     [CustomEditor(typeof(FigmaUIImage))]
     public class FigmaUiImageInspector : Editor
     { 
-        [SerializeField] VisualTreeAsset ui = default;
+        VisualTreeAsset ui;
         
         FigmaUIImage _figmaUiImage;
         VisualElement _previewContainer;
@@ -17,6 +17,19 @@ namespace Volorf.Figmage
 
         public override VisualElement CreateInspectorGUI()
         {
+            // ui = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/MyCustomEditor.uxml")
+            ui = Resources.Load<VisualTreeAsset>("FigmaUiImageInspector");
+            Debug.Log(ui.name);
+            // string[] uiPaths = AssetDatabase.FindAssets("FigmaUiImageInspector", null);
+            // Debug.Log(uiPaths[0]);
+            // string[] links = 
+            //
+            // if (links != null)
+            // {
+            //     string path = AssetDatabase.GUIDToAssetPath(links[0]);
+            //     preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));
+            // }
+            
             // Root UI
             _root = new VisualElement();
             

@@ -280,6 +280,7 @@ namespace Volorf.Figmage
             if (links != null)
             {
                 string path = AssetDatabase.GUIDToAssetPath(links[0]);
+                Debug.Log("path : " + path);
                 preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));
             }
             
