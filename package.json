@@ -1,6 +1,6 @@
 {
   "name": "com.volorf.figma-ui-image",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "displayName": "Figma UI Image",
   "description": "Bring your design from Figma to Unity as a UI Image with a click.",
   "unity": "2022.3",
