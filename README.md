@@ -23,5 +23,5 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 Figma UI Image is an open-source project.  I am developing in my spare time. If you like it you can support me with [a few cups of coffee](https://www.buymeacoffee.com/volorf).
 
 
-## Conctact me
+## Contacts
 [Twitter](https://www.twitter.com/volorf) | [Linkedin](https://www.linkedin.com/in/oleg-frolov-6a6a4752/) | [Dribbble](https://dribbble.com/Volorf) | [Personal Site](https://olegfrolov.design/)
