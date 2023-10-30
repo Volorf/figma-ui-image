@@ -1,4 +1,4 @@
-x# Figma UI Image
+## Figma UI Image
 Create a UI Image in Unity from Figma Designs with just a few clicks!
 
 ## System Requirements
