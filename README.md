@@ -4,8 +4,6 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 ## System Requirements
 `Unity 2022.4` or later versions.
 
-<video autoplay="true" playsinline="playsinline" muted="muted" loop="true" src="vr_arrow_pointers_1080x720_opt.mp4"></video>
-
 ## How to install it
 1. Copy `Git URL`;
 2. Open `Window/Package Manager`;
@@ -20,6 +18,8 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 1. Select `Canvas` and Right Mouse Click (call a context menu);
 2. Select `UI/Figma UI Image`;
 3. Copy a link from Figma and paste it into the component.
+
+<img src="Images/how_to_add_figma_ui_image.gif" width="800">
 
 ## Support
 Figma UI Image is an open-source project.  I am developing in my spare time. If you like it you can support me with [a few cups of coffee](https://www.buymeacoffee.com/volorf).
