@@ -35,6 +35,9 @@ namespace Volorf.FigmaUIImage
 
         public void CreateGUI()
         {
+            string tokenValue = PlayerPrefs.GetString(FigmaTokenKeyName);
+            Debug.Log(tokenValue);
+            
             _ui = Resources.Load<VisualTreeAsset>("FigmaUIImageSettings");
             VisualElement root = rootVisualElement;
             VisualElement labelFromUXML = _ui.Instantiate();
@@ -42,7 +45,7 @@ namespace Volorf.FigmaUIImage
 
             Button apply = root.Q<Button>("Apply");
             _field = root.Q<TextField>("Token");
-            _field.value = PlayerPrefs.GetString(FigmaTokenKeyName);
+            _field.value = tokenValue;
 
             apply.RegisterCallback<ClickEvent>(SaveFigmaToken);
         }

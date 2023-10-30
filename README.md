@@ -15,6 +15,7 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 1. Open `Figma Settings/Account/Personal access tokens`;
 2. Click the `Generate new token` button and copy it;
 3. Paste it in `Figma UI Image/Settings` and apply.
+<img src="http://frolovoleg.ru/figma-ui-image/access.png" width="800">
 
 ## How to create a Figma UI Image
 1. Select `Canvas` and Right Mouse Click (call a context menu);
