@@ -9,7 +9,7 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 2. Open `Window/Package Manager`;
 3. Add the `Git URL`.
 
-<img src="http://frolovoleg.ru/figma-ui-image/how_to_add_figma_ui_image.gif" width="800">
+<img src="http://frolovoleg.ru/figma-ui-image/how_to_install.gif" width="800">
 
 ## How to set up a personal access token
 1. Open `Figma Settings/Account/Personal access tokens`;
@@ -21,7 +21,7 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 2. Select `UI/Figma UI Image`;
 3. Copy a link from Figma and paste it into the component.
 
-<img src="https://frolovoleg.ru/figma-ui-image/how_to_add_figma_ui_image.gif" width="800">
+<img src="http://frolovoleg.ru/figma-ui-image/how_to_add_figma_ui_image.gif" width="800">
 
 ## Support
 Figma UI Image is an open-source project.  I am developing in my spare time. If you like it you can support me with [a few cups of coffee](https://www.buymeacoffee.com/volorf).
