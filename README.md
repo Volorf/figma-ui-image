@@ -4,7 +4,7 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 ## System Requirements
 `Unity 2022.4` or later versions.
 
-<video autoplay="true" muted="muted" loop="true" src="vr_arrow_pointers_1080x720_opt.mp4"></video>
+<video autoplay="true" playsinline="playsinline" muted="muted" loop="true" src="vr_arrow_pointers_1080x720_opt.mp4"></video>
 
 ## How to install it
 1. Copy `Git URL`;
