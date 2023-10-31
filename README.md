@@ -11,6 +11,8 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 
 <img src="http://frolovoleg.ru/figma-ui-image/how_to_install.gif" width="800">
 
+Or you can import it as [`.uniptypackage`](https://www.dropbox.com/scl/fi/nf5gvrl8qxu46mtumsjx2/Figma-UI-Image.unitypackage?rlkey=c7kzpm8vtcbhlvbxdi1eqorbh&dl=0) via `Assets/Import package/Custom package`.
+
 ## How to set up a personal access token
 1. Open `Figma Settings/Account/Personal access tokens`;
 2. Click the `Generate new token` button and copy it;
