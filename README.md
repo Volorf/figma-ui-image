@@ -20,7 +20,7 @@ Or you can import it as [`.uniptypackage`](https://www.dropbox.com/scl/fi/nf5gvr
 
 Learn more about it [here](https://www.figma.com/developers/api#access-tokens)
 
-<img src="http://frolovoleg.ru/figma-ui-image/access.png" width="800">
+<img src="http://frolovoleg.ru/figma-ui-image/figma-token.png" width="800">
 
 ## How to create a Figma UI Image
 1. Select `Canvas` and Right Mouse Click (call a context menu);
