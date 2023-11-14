@@ -30,8 +30,8 @@ Learn more about it [here](https://www.figma.com/developers/api#access-tokens)
 <img src="http://frolovoleg.ru/figma-ui-image/how_to_add_figma_ui_image.gif" width="800">
 
 ## Support
-Figma UI Image is an open-source project.  I am developing in my spare time. If you like it you can support me with [a few cups of coffee](https://www.buymeacoffee.com/volorf).
+Figma UI Image is an open-source project I am developing in my spare time. If you like it, you can support me with [a few cups of coffee](https://www.buymeacoffee.com/volorf).
 
 
-## Conctact me
+## Contact me
 [Twitter](https://www.twitter.com/volorf) | [Linkedin](https://www.linkedin.com/in/oleg-frolov-6a6a4752/) | [Dribbble](https://dribbble.com/Volorf) | [Personal Site](https://olegfrolov.design/)
