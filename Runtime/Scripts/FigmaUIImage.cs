@@ -54,6 +54,7 @@ namespace Volorf.FigmaUIImage
         {
             if (figmaLink.Length <= 0)
             {
+                // Only for editor
                 texture = GetPreview("FigImagePlaceholder");
                 return;
             }
@@ -120,6 +121,7 @@ namespace Volorf.FigmaUIImage
             }
             else
             {
+                // Only For Editor
                 texture = GetPreview("FigImagePlaceholder");
             }
         }
