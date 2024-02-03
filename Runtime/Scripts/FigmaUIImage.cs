@@ -42,9 +42,9 @@ namespace Volorf.FigmaUIImage
             }
         }
         
-        Texture _texture;
-        Texture _loadingTexture;
-        Texture _defaultTexture;
+        Texture _texture = default;
+        Texture _loadingTexture = default;
+        Texture _defaultTexture = default;
         RawImage _rawImage;
         float _textureRatio;
         Vector2 _textureSize;
@@ -54,9 +54,9 @@ namespace Volorf.FigmaUIImage
         {
             if (figmaLink.Length <= 0)
             {
-                // Only for editor
-                texture = GetPreview("FigImagePlaceholder");
-                return;
+                #if UNITY_EDITOR
+                    texture = GetPreview("FigImagePlaceholder");
+                #endif
             }
             else
             {
@@ -76,8 +76,10 @@ namespace Volorf.FigmaUIImage
         {
             _rawImage = GetComponent<RawImage>();
             
-            _defaultTexture = GetPreview("FigImagePlaceholder");
-            _loadingTexture = GetPreview("FigImageLoading");
+            #if UNITY_EDITOR
+                _defaultTexture = GetPreview("FigImagePlaceholder");
+                _loadingTexture = GetPreview("FigImageLoading");
+            #endif
             
             if (_rawImage.texture == null)
             {
@@ -121,8 +123,9 @@ namespace Volorf.FigmaUIImage
             }
             else
             {
-                // Only For Editor
-                texture = GetPreview("FigImagePlaceholder");
+                #if UNITY_EDITOR
+                    texture = GetPreview("FigImagePlaceholder");
+                #endif
             }
         }
 
@@ -276,14 +279,16 @@ namespace Volorf.FigmaUIImage
         {
             Texture preview = null;
             
-            string[] links = AssetDatabase.FindAssets(assetName, null);
-            
-            if (links != null)
-            {
-                string path = AssetDatabase.GUIDToAssetPath(links[0]);
-                preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));
-            }
-            
+            #if UNITY_EDITOR
+                string[] links = AssetDatabase.FindAssets(assetName, null);
+                
+                if (links != null)
+                {
+                    string path = AssetDatabase.GUIDToAssetPath(links[0]);
+                    preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));
+                }
+            #endif
+
             return preview;
         }
 
