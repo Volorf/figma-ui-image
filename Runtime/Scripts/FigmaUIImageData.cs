@@ -8,13 +8,15 @@ namespace Volorf.FigmaUIImage
         float _width;
         float _height;
         float _scale;
+        string _lastUpdate;
 
-        public FigmaUIImageData(Texture t, float s)
+        public FigmaUIImageData(Texture t, float s, string lastUpdate)
         {
             this._texture = t;
             this._width = t.width;
             this._height = t.height;
             this._scale = s;
+            this._lastUpdate = lastUpdate;
         }
 
         public Texture GetTexture() => _texture;

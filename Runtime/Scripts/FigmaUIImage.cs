@@ -42,20 +42,21 @@ namespace Volorf.FigmaUIImage
             }
         }
         
-        Texture _texture;
-        Texture _loadingTexture;
-        Texture _defaultTexture;
+        Texture _texture = default;
+        Texture _loadingTexture = default;
+        Texture _defaultTexture = default;
         RawImage _rawImage;
         float _textureRatio;
         Vector2 _textureSize;
         string _figmaSelectionName;
-        
+
         public void UpdateFigmaImage()
         {
             if (figmaLink.Length <= 0)
             {
-                texture = GetPreview("FigImagePlaceholder");
-                return;
+                #if UNITY_EDITOR
+                    texture = GetPreview("FigImagePlaceholder");
+                #endif
             }
             else
             {
@@ -75,8 +76,10 @@ namespace Volorf.FigmaUIImage
         {
             _rawImage = GetComponent<RawImage>();
             
-            _defaultTexture = GetPreview("FigImagePlaceholder");
-            _loadingTexture = GetPreview("FigImageLoading");
+            #if UNITY_EDITOR
+                _defaultTexture = GetPreview("FigImagePlaceholder");
+                _loadingTexture = GetPreview("FigImageLoading");
+            #endif
             
             if (_rawImage.texture == null)
             {
@@ -120,7 +123,9 @@ namespace Volorf.FigmaUIImage
             }
             else
             {
-                texture = GetPreview("FigImagePlaceholder");
+                #if UNITY_EDITOR
+                    texture = GetPreview("FigImagePlaceholder");
+                #endif
             }
         }
 
@@ -212,6 +217,7 @@ namespace Volorf.FigmaUIImage
                     case UnityWebRequest.Result.Success:
                         string js = webRequest.downloadHandler.text;
                         JSONNode info = JSON.Parse(js);
+                        Debug.Log(info);
                         // 7 is nodes
                         _figmaSelectionName = info[7][0][0][1];
                         SetFigmageName(_figmaSelectionName);
@@ -242,7 +248,7 @@ namespace Volorf.FigmaUIImage
                     texture = tempTex;
                     SetRawImage(texture);
                     
-                    FigmaUIImageData figmaUiImageData = new FigmaUIImageData(texture, imageScale);
+                    FigmaUIImageData figmaUiImageData = new FigmaUIImageData(texture, imageScale, GetCurrentDateTime());
 
                     // print("tex width: " + figmaImageData.GetWidth());
                     // print("tex height: " + figmaImageData.GetHeight());
@@ -273,15 +279,25 @@ namespace Volorf.FigmaUIImage
         {
             Texture preview = null;
             
-            string[] links = AssetDatabase.FindAssets(assetName, null);
-            
-            if (links != null)
-            {
-                string path = AssetDatabase.GUIDToAssetPath(links[0]);
-                preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));
-            }
-            
+            #if UNITY_EDITOR
+                string[] links = AssetDatabase.FindAssets(assetName, null);
+                
+                if (links != null)
+                {
+                    string path = AssetDatabase.GUIDToAssetPath(links[0]);
+                    preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));
+                }
+            #endif
+
             return preview;
+        }
+
+        public static string GetCurrentDateTime()
+        {
+            DateTime curDT = DateTime.Now;
+            string strD= $"{curDT.Year}.{curDT.Month}.{curDT.Day}";
+            string strT = $"{curDT.Hour}:{curDT.Minute}:{curDT.Second}";
+            return $"{strD} {strT}";
         }
     }
 }
