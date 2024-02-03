@@ -49,7 +49,7 @@ namespace Volorf.FigmaUIImage
         float _textureRatio;
         Vector2 _textureSize;
         string _figmaSelectionName;
-        
+
         public void UpdateFigmaImage()
         {
             if (figmaLink.Length <= 0)
@@ -214,6 +214,7 @@ namespace Volorf.FigmaUIImage
                     case UnityWebRequest.Result.Success:
                         string js = webRequest.downloadHandler.text;
                         JSONNode info = JSON.Parse(js);
+                        Debug.Log(info);
                         // 7 is nodes
                         _figmaSelectionName = info[7][0][0][1];
                         SetFigmageName(_figmaSelectionName);
@@ -244,7 +245,7 @@ namespace Volorf.FigmaUIImage
                     texture = tempTex;
                     SetRawImage(texture);
                     
-                    FigmaUIImageData figmaUiImageData = new FigmaUIImageData(texture, imageScale);
+                    FigmaUIImageData figmaUiImageData = new FigmaUIImageData(texture, imageScale, GetCurrentDateTime());
 
                     // print("tex width: " + figmaImageData.GetWidth());
                     // print("tex height: " + figmaImageData.GetHeight());
@@ -284,6 +285,14 @@ namespace Volorf.FigmaUIImage
             }
             
             return preview;
+        }
+
+        public static string GetCurrentDateTime()
+        {
+            DateTime curDT = DateTime.Now;
+            string strD= $"{curDT.Year}.{curDT.Month}.{curDT.Day}";
+            string strT = $"{curDT.Hour}:{curDT.Minute}:{curDT.Second}";
+            return $"{strD} {strT}";
         }
     }
 }

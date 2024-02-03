@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -34,7 +35,7 @@ namespace Volorf.FigmaUIImage
             
             if (_figmaUiImage.GetRawImage() != null)
             {
-                UpdatePreview(new FigmaUIImageData(_figmaUiImage.GetRawImage().texture, _figmaUiImage.GetScale()));
+                UpdatePreview(new FigmaUIImageData(_figmaUiImage.GetRawImage().texture, _figmaUiImage.GetScale(), FigmaUIImage.GetCurrentDateTime()));
             }
             
             return _root;
