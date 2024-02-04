@@ -49,11 +49,25 @@ namespace Volorf.FigmaUIImage
                 _field.value = tokenValue;
 
                 apply.RegisterCallback<ClickEvent>(SaveFigmaToken);
+                
             }
 
             void SaveFigmaToken(ClickEvent ev)
             {
-                PlayerPrefs.SetString(FigmaTokenKeyName, _field.value);
+                string token = _field.value;
+                
+                if (token.Length <= 0) return;
+                
+                PlayerPrefs.SetString(FigmaTokenKeyName, token);
+                
+                IFigmaImageUpdatable[] figmaImageUpdatables =
+                    FindObjectsOfType<MonoBehaviour>(false).OfType<IFigmaImageUpdatable>().ToArray();
+
+                foreach (IFigmaImageUpdatable updatable in figmaImageUpdatables)
+                {
+                    updatable.SetToken(token);
+                }
+                
                 _wnd.Close();
             }
 

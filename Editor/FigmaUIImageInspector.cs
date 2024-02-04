@@ -25,6 +25,7 @@ namespace Volorf.FigmaUIImage
                 
                 // Get references
                 _previewContainer = _root.Q<VisualElement>("Container");
+                _root.Q<TextField>("Token");
                 _root.Q<TextField>("FigmaLink");
                 _imageDescription = _root.Q<Label>("imageDescription");
                 Button updateButton = _root.Q<Button>("UpdateButton");

@@ -5,6 +5,7 @@
     </ui:VisualElement>
     <ui:Label tabindex="-1" text="No Image" display-tooltip-when-elided="true" name="imageDescription" class="description" style="margin-top: 8px; margin-bottom: 0; padding-left: 0; padding-right: 0;" />
     <ui:FloatField label="Scale" value="2" binding-path="imageScale" name="Scaler" picking-mode="Ignore" style="margin-top: 16px; margin-left: 0; margin-right: 0;" />
+    <ui:TextField picking-mode="Ignore" label="Token" multiline="true" binding-path="token" name="Token" style="height: 83px; overflow: hidden; flex-wrap: nowrap; flex-direction: column; white-space: normal; align-self: auto; margin-top: 16px; margin-left: 0; margin-right: 0; margin-bottom: 0; letter-spacing: 0; -unity-paragraph-spacing: 0;" />
     <ui:TextField picking-mode="Ignore" label="Figma Link" multiline="true" binding-path="figmaLink" name="FigmaLink" style="height: 83px; overflow: hidden; flex-wrap: nowrap; flex-direction: column; white-space: normal; align-self: auto; margin-top: 16px; margin-left: 0; margin-right: 0; margin-bottom: 0; letter-spacing: 0; -unity-paragraph-spacing: 0;" />
     <ui:Button text="Update" display-tooltip-when-elided="true" name="UpdateButton" style="margin-top: 16px; min-height: 24px;" />
 </ui:UXML>
