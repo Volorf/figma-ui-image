@@ -34,6 +34,7 @@ Learn more about it [here](https://www.figma.com/developers/api#access-tokens)
 
 ### How to create a Figma UI Image
 <img src="http://frolovoleg.ru/figma-ui-image/figma_ui_image_component_without_figmauidata.png" width="400">
+
 1. Select `Canvas` and Right Mouse Click (call a context menu);
 2. Select `UI/Figma UI Image`;
 3. Create `Figma UI Data`, paste there your token and link and add drag it into the slot.
