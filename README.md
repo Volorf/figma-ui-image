@@ -13,14 +13,24 @@ Create a UI Image in Unity from Figma Designs with just a few clicks!
 
 Or you can import it as [`.uniptypackage`](https://www.dropbox.com/scl/fi/nf5gvrl8qxu46mtumsjx2/Figma-UI-Image.unitypackage?rlkey=c7kzpm8vtcbhlvbxdi1eqorbh&dl=0) via `Assets/Import package/Custom package`.
 
-## How to set up a personal access token
-1. Open `Figma Settings/Account/Personal access tokens`;
-2. Click the `Generate new token` button and copy it;
-3. Paste it in `Figma UI Image/Settings` and apply.
+## How to get an image from Figma
+To do that you need a few things:
+1. ```Figma Access Token```
+2. ```Figma Link``` to a design you want to get as a image
+3. Set up ```Figma UI Image```
+
+### How to set up a Figma Access Token
+<img src="http://frolovoleg.ru/figma-ui-image/figma-token.png" width="800">
+1. Open `Figma Settings/Account/Personal access tokens`
+2. Click the `Generate new token` button.
 
 Learn more about it [here](https://www.figma.com/developers/api#access-tokens)
 
-<img src="http://frolovoleg.ru/figma-ui-image/figma-token.png" width="800">
+### How to get a Figma Link
+
+
+
+
 
 ## How to create a Figma UI Image
 1. Select `Canvas` and Right Mouse Click (call a context menu);
