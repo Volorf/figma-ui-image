@@ -18,14 +18,13 @@ namespace Volorf.FigmaUIImage
         public FigmaUIImageEvent OnUiImageUpdated = new FigmaUIImageEvent();
         public UnityEvent OnUploadingFailed = new UnityEvent();
         
-        [TextArea(3, 6)] public string figmaLink = "";
         [SerializeField] float imageScale = 2f;
+        [SerializeField] FigmaUIData figmaUIData;
         
         const string MainFigmaLinkPart = "https://www.figma.com/file/";
         const string BaseFigmaImageUrl = "https://api.figma.com/v1/images/";
         const string BaseFigmaDocumentUrl = "https://api.figma.com/v1/files/";
-
-        [TextArea(3, 6)] public string token = "";
+        
         string _figmaFileKey;
         bool _isLinkValid;
 
@@ -49,32 +48,35 @@ namespace Volorf.FigmaUIImage
         float _textureRatio;
         Vector2 _textureSize;
         string _figmaSelectionName;
-
-        public void SetToken(string t)
-        {
-            token = t;
-            Debug.Log("from FigmaUIImage token: " + token);
-        }
         
         public void UpdateFigmaImage()
         {
-            if (figmaLink.Length <= 0)
+            if (figmaUIData == null)
             {
-                figmaLink = PlayerPrefs.GetString("figmaLink"); // TODO: Clean from this
-                #if UNITY_EDITOR
-                    texture = GetPreview("FigImagePlaceholder");
-                #endif
+                Debug.LogError("Add a Figma UI Data to the Figma UI Image");
+                return;
             }
-            else
+            if (figmaUIData.token.Length <= 0)
             {
-                PlayerPrefs.SetString("figmaLink", figmaLink);
-                
+                Debug.LogError("Add a Figma token to your Figma UI Data");
+                return;
             }
+
+            if (figmaUIData.figmaLink.Length <= 0)
+            {
+                Debug.LogError("Add a Figma Link to your Figma UI Data");
+                return;
+            }
+            
+            #if UNITY_EDITOR
+                        texture = GetPreview("FigImagePlaceholder");
+            #endif
             
             _isLinkValid = true;
             SetImageFromFigma();
             
-            Debug.Log("figmaLink: " + figmaLink);
+            Debug.Log("figmaLink: " + figmaUIData.figmaLink);
+            Debug.Log("figmaToken: " + figmaUIData.token);
         }
 
         void SetFigmageName(string name)
@@ -105,8 +107,8 @@ namespace Volorf.FigmaUIImage
 
         void Start()
         {
-            Debug.LogError("figmaLink from start " + figmaLink);
-            Debug.LogError("token from start " + token);
+            Debug.LogError("figmaLink from start " + figmaUIData.figmaLink);
+            Debug.LogError("token from start " + figmaUIData.token);
             
             if (_rawImage.texture == null)
             {
@@ -124,14 +126,11 @@ namespace Volorf.FigmaUIImage
         {
             if (_rawImage == null) _rawImage = GetComponent<RawImage>();
             
-            // _token = "figd_F4S4EOkkWk0tv9nIX-iCyIf6G--PXlsn_4xO9Ah-";
-            
-            Debug.LogError("_token: " + token);
-            string fileKey = GetFileKey(figmaLink);
+            string fileKey = GetFileKey(figmaUIData.figmaLink);
 
             if (_isLinkValid)
             {
-                string nodeId = GetNodeId(figmaLink);
+                string nodeId = GetNodeId(figmaUIData.figmaLink);
 
                 string finalImageUrl = CombineImageUrl(BaseFigmaImageUrl, fileKey, nodeId, imageScale);
                 StartCoroutine(RequestImageLinkFromFigma(finalImageUrl));
@@ -186,7 +185,7 @@ namespace Volorf.FigmaUIImage
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
-                webRequest.SetRequestHeader("X-FIGMA-TOKEN", token);
+                webRequest.SetRequestHeader("X-FIGMA-TOKEN", figmaUIData.token);
                 yield return webRequest.SendWebRequest();
 
                 switch (webRequest.result)
@@ -216,7 +215,7 @@ namespace Volorf.FigmaUIImage
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
-                webRequest.SetRequestHeader("X-FIGMA-TOKEN", token);
+                webRequest.SetRequestHeader("X-FIGMA-TOKEN", figmaUIData.token);
                 yield return webRequest.SendWebRequest();
 
                 switch (webRequest.result)
@@ -231,7 +230,7 @@ namespace Volorf.FigmaUIImage
                     case UnityWebRequest.Result.ProtocolError:
                         OnUploadingFailed.Invoke();
                         Debug.LogError("HTTP Error: " + webRequest.error);
-                        Debug.LogError("figmaLink: " + figmaLink);
+                        Debug.LogError("figmaLink: " + figmaUIData.figmaLink);
                         break;
                     case UnityWebRequest.Result.Success:
                         string js = webRequest.downloadHandler.text;

@@ -65,7 +65,7 @@ namespace Volorf.FigmaUIImage
 
                 foreach (IFigmaImageUpdatable updatable in figmaImageUpdatables)
                 {
-                    updatable.SetToken(token);
+                    // updatable.SetToken(token);
                 }
                 
                 _wnd.Close();
