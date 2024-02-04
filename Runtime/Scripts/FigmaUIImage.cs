@@ -49,6 +49,8 @@ namespace Volorf.FigmaUIImage
         float _textureRatio;
         Vector2 _textureSize;
         string _figmaSelectionName;
+
+        public FigmaUIData GetFigmaUIData() => figmaUIData;
         
         public void UpdateFigmaImage()
         {
@@ -59,13 +61,13 @@ namespace Volorf.FigmaUIImage
             }
             if (figmaUIData.token.Length <= 0)
             {
-                Debug.LogError("Add a Figma token to your Figma UI Data");
+                Debug.LogError("Add a Figma token to the Figma UI Data");
                 return;
             }
 
             if (figmaUIData.figmaLink.Length <= 0)
             {
-                Debug.LogError("Add a Figma Link to your Figma UI Data");
+                Debug.LogError("Add a Figma Link to the Figma UI Data");
                 return;
             }
             
