@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Volorf/UI%20Image%20From%20Figma/Editor/FignitySettings.uss?fileID=7433441132597879392&amp;guid=49a41bf3e8b504f208336bf315351400&amp;type=3#FignitySettings" />
-    <ui:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); max-height: 240px; min-height: 240px; height: 240px;">
-        <ui:Label text="Enter Personal Access Token" name="FieldName" style="margin-bottom: 4px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-        <ui:TextField picking-mode="Ignore" name="Token" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; min-height: 24px;" />
-        <ui:Button text="Apply" display-tooltip-when-elided="true" name="Apply" enable-rich-text="true" style="white-space: nowrap; margin-left: 0; margin-right: 0; margin-top: 8px; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; min-height: 24px;" />
-        <ui:Label tabindex="-1" text="To get this token, go to your &lt;b&gt;Figma account&lt;/b&gt;, then open &lt;b&gt;Settings&lt;/b&gt; and find &lt;b&gt;Personal access tokens&lt;/b&gt;. Click &lt;b&gt;Generate new token&lt;/b&gt; and set it up. &lt;b&gt;Fignity&lt;/b&gt; needs read-only access. &lt;a href=&quot;https://www.figma.com/developers/api#access-tokens&quot;&gt;Learn more&lt;/a&gt;." display-tooltip-when-elided="true" name="HowToGetPAT" style="padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-top: 8px; font-size: 10px; color: rgb(153, 153, 153); overflow: visible; white-space: normal;" />
-    </ui:VisualElement>
-</ui:UXML>
