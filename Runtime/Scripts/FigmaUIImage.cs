@@ -70,14 +70,11 @@ namespace Volorf.FigmaUIImage
             }
             
             #if UNITY_EDITOR
-                        texture = GetPreview("FigImagePlaceholder");
+                texture = GetPreview("FigImagePlaceholder");
             #endif
             
             _isLinkValid = true;
             SetImageFromFigma();
-            
-            Debug.Log("figmaLink: " + figmaUIData.figmaLink);
-            Debug.Log("figmaToken: " + figmaUIData.token);
         }
 
         void SetFigmageName(string name)
@@ -96,20 +93,13 @@ namespace Volorf.FigmaUIImage
                 _loadingTexture = GetPreview("FigImageLoading");
             #endif
             
-            if (_rawImage.texture == null)
-            {
-                texture = _defaultTexture;
-            }
-            else
-            {
-                texture = _rawImage.texture;
-            }
+            texture = _rawImage.texture == null ? _defaultTexture : _rawImage.texture;
         }
 
         void Start()
         {
-            Debug.LogError("figmaLink from start " + figmaUIData.figmaLink);
-            Debug.LogError("token from start " + figmaUIData.token);
+            // Debug.LogError("figmaLink from start " + figmaUIData.figmaLink);
+            // Debug.LogError("token from start " + figmaUIData.token);
             
             if (_rawImage.texture == null)
             {
@@ -231,12 +221,11 @@ namespace Volorf.FigmaUIImage
                     case UnityWebRequest.Result.ProtocolError:
                         OnUploadingFailed.Invoke();
                         Debug.LogError("HTTP Error: " + webRequest.error);
-                        Debug.LogError("figmaLink: " + figmaUIData.figmaLink);
                         break;
                     case UnityWebRequest.Result.Success:
                         string js = webRequest.downloadHandler.text;
                         JSONNode info = JSON.Parse(js);
-                        Debug.Log(info);
+                        // Debug.Log(info);
                         // 7 is nodes
                         _figmaSelectionName = info[7][0][0][1];
                         SetFigmageName(_figmaSelectionName);
