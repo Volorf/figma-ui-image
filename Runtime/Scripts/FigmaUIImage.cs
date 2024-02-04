@@ -12,6 +12,7 @@ using UnityEngine.UI;
 namespace Volorf.FigmaUIImage
 {
     [ExecuteInEditMode]
+    [RequireComponent(typeof(RawImage))]
     [AddComponentMenu("Volorf/Figma UI Image")]
     public class FigmaUIImage : MonoBehaviour, IFigmaImageUpdatable
     {
