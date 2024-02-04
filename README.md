@@ -20,7 +20,7 @@ To do that you need a few things:
 3. Set up ```Figma UI Image```
 
 ### How to set up a Figma Access Token
-<img src="http://frolovoleg.ru/figma-ui-image/figma-token.png" width="800">
+<img src="http://frolovoleg.ru/figma-ui-image/figma_token.png" width="800">
 1. Open `Figma Settings/Account/Personal access tokens`
 2. Click the `Generate new token` button.
 
