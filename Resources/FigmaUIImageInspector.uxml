@@ -1,10 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <Style src="project://database/Assets/Figma%20UI%20Image/Editor/Styles.uss?fileID=7433441132597879392&amp;guid=d38e66448a28c42a4b2cc5c95ddfe861&amp;type=3#Styles" />
     <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(34, 34, 34); min-height: 240px; max-height: 240px; margin-top: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-top: 0;">
         <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: auto; height: auto; min-height: auto; max-height: 240px; max-width: 100%; min-width: auto; align-self: center; justify-content: center; align-items: center; -unity-background-scale-mode: scale-to-fit;" />
     </ui:VisualElement>
     <ui:Label tabindex="-1" text="No Image" display-tooltip-when-elided="true" name="imageDescription" class="description" style="margin-top: 8px; margin-bottom: 0; padding-left: 0; padding-right: 0;" />
     <ui:FloatField label="Scale" value="2" binding-path="imageScale" name="Scaler" picking-mode="Ignore" style="margin-top: 16px; margin-left: 0; margin-right: 0; margin-bottom: 0;" />
     <uie:ObjectField label="Figma UI Data" type="Volorf.FigmaUIImage.FigmaUIData, Volorf.Figmage.Runtime" allow-scene-objects="false" binding-path="figmaUIData" style="margin-left: 0; margin-right: 0; margin-top: 4px; margin-bottom: 0;" />
-    <ui:Button text="Update" display-tooltip-when-elided="true" name="UpdateButton" style="margin-top: 16px; min-height: 24px;" />
+    <ui:VisualElement name="explanation" class="unity-base-field unity-object-field" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); margin-left: 0; margin-right: 0; margin-top: 4px; margin-bottom: 0; opacity: 1; display: flex;">
+        <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="unity-label unity-base-field__label" style="opacity: 0;" />
+        <ui:Label tabindex="0" text="To create a Figma UI Data you need to right click in the Assets and go to Create/Figma UI Image/Create Figma UI Data" display-tooltip-when-elided="true" style="margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; opacity: 0.5; white-space: normal; margin-left: 0; margin-right: 0; flex-grow: 0; text-overflow: clip; flex-wrap: wrap; max-width: none; flex-direction: row-reverse; -unity-text-align: upper-left; flex-basis: auto; flex-shrink: 1;" />
+    </ui:VisualElement>
+    <ui:Button text="Update" display-tooltip-when-elided="true" name="UpdateButton" style="margin-top: 16px; min-height: 24px; opacity: 1;" />
 </ui:UXML>
