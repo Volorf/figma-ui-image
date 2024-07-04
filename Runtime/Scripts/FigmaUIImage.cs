@@ -22,7 +22,7 @@ namespace Volorf.FigmaUIImage
         [SerializeField] float imageScale = 2f;
         [SerializeField] FigmaUIData figmaUIData;
         
-        const string MainFigmaLinkPart = "https://www.figma.com/file/";
+        const string MainFigmaLinkPart = "https://www.figma.com/design/";
         const string BaseFigmaImageUrl = "https://api.figma.com/v1/images/";
         const string BaseFigmaDocumentUrl = "https://api.figma.com/v1/files/";
         
