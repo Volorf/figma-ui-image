@@ -10,4 +10,5 @@
         <ui:Label tabindex="0" text="Right click in the Assets and click on Create/Figma UI Image/Create Figma UI Data" display-tooltip-when-elided="true" style="margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; opacity: 0.5; white-space: normal; margin-left: 2px; margin-right: 2px; flex-grow: 0; text-overflow: clip; flex-wrap: wrap; max-width: none; flex-direction: row-reverse; -unity-text-align: upper-left; flex-basis: auto; flex-shrink: 1;" />
     </ui:VisualElement>
     <ui:Button text="Update" display-tooltip-when-elided="true" name="UpdateButton" style="margin-top: 16px; min-height: 24px; opacity: 1;" />
+    <ui:Button text="Create" display-tooltip-when-elided="true" name="CreateFigmaUIData" style="margin-top: 16px; min-height: 24px; opacity: 1;" />
 </ui:UXML>

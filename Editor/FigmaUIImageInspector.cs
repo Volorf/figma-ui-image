@@ -29,9 +29,11 @@ namespace Volorf.FigmaUIImage
                 _imageDescription = _root.Q<Label>("imageDescription");
                 Button updateButton = _root.Q<Button>("UpdateButton");
                 _explanation = _root.Q<VisualElement>("explanation");
+                Button createFigmaUIDataAsset = _root.Q<Button>("CreateFigmaUIData");
                 
                 // Subscriptions
                 updateButton.RegisterCallback<ClickEvent>(UpdateFigmaImage);
+                createFigmaUIDataAsset.RegisterCallback<ClickEvent>(CreateFigmaUIDataAsset);
                 _figmaUiImage.OnUiImageUpdated.AddListener(UpdatePreview);
                 _figmaUiImage.OnUploadingFailed.AddListener(SetDefault);
                 
@@ -87,6 +89,22 @@ namespace Volorf.FigmaUIImage
             void StopPreloading()
             {
                 
+            }
+
+            void CreateFigmaUIDataAsset(ClickEvent ev)
+            {
+                FigmaUIData asset = ScriptableObject.CreateInstance<FigmaUIData>();
+                AssetDatabase.CreateAsset(asset, "Assets/Figma UI Data.asset");
+                AssetDatabase.SaveAssets();
+
+                EditorUtility.FocusProjectWindow();
+
+                Selection.activeObject = asset;
+            }
+
+            void PrintMessage(ClickEvent ev)
+            {
+                Debug.Log("test message");
             }
 
             void SetDefault()
