@@ -17,6 +17,8 @@ namespace Volorf.FigmaUIImage
             Label _imageDescription;
             VisualElement _explanation;
 
+            string FIGMA_UI_DATA_INDEX = "FigmaUIDataIndex";
+
             public override VisualElement CreateInspectorGUI()
             {
                 _ui = Resources.Load<VisualTreeAsset>("FigmaUiImageInspector");
@@ -94,12 +96,20 @@ namespace Volorf.FigmaUIImage
             void CreateFigmaUIDataAsset(ClickEvent ev)
             {
                 FigmaUIData asset = ScriptableObject.CreateInstance<FigmaUIData>();
-                AssetDatabase.CreateAsset(asset, "Assets/Figma UI Data.asset");
+                AssetDatabase.CreateAsset(asset, $"Assets/Figma UI Data {GetIndex()}.asset");
                 AssetDatabase.SaveAssets();
 
                 EditorUtility.FocusProjectWindow();
 
                 Selection.activeObject = asset;
+            }
+
+            string GetIndex()
+            {
+                int i = PlayerPrefs.GetInt(FIGMA_UI_DATA_INDEX, 0);
+                i++;
+                PlayerPrefs.SetInt(FIGMA_UI_DATA_INDEX, i);
+                return i.ToString("D4");
             }
 
             void PrintMessage(ClickEvent ev)
