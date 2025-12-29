@@ -52,7 +52,7 @@ namespace Volorf.FigmaUIImage
             PlayerPrefs.SetString(FigmaTokenKeyName, _field.value);
             _wnd.Close();
             #if UNITY_EDITOR
-            Debug.Log($"Figma UI Image Token was saved locally: {_field.value}");
+            Debug.Log($"Figma UI Image Token was saved locally/*: {_field.value}*/");
             #endif
         }
 

@@ -15,7 +15,6 @@ namespace Volorf.FigmaUIImage
             VisualElement _previewContainer;
             VisualElement _root;
             Label _imageDescription;
-            VisualElement _explanation;
 
             public override VisualElement CreateInspectorGUI()
             {
@@ -28,7 +27,6 @@ namespace Volorf.FigmaUIImage
                 _previewContainer = _root.Q<VisualElement>("Container");
                 _imageDescription = _root.Q<Label>("imageDescription");
                 Button updateButton = _root.Q<Button>("UpdateButton");
-                _explanation = _root.Q<VisualElement>("explanation");
                 
                 // Subscriptions
                 updateButton.RegisterCallback<ClickEvent>(UpdateFigmaImage);
@@ -47,31 +45,25 @@ namespace Volorf.FigmaUIImage
 
             void SetDisplayStyleForExplanation()
             {
-                _explanation.style.display = _figmaUiImage.GetFigmaUIData() != null ? new StyleEnum<DisplayStyle>(DisplayStyle.None) : new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
+                // _explanation.style.display = _figmaUiImage.GetFigmaUIData() != null ? new StyleEnum<DisplayStyle>(DisplayStyle.None) : new StyleEnum<DisplayStyle>(DisplayStyle.Flex);
             }
 
             void UpdateFigmaImage(ClickEvent ev)
             {
                 SetDisplayStyleForExplanation();
                 StartPreloading();
-                if (_figmaUiImage.GetFigmaUIData() == null)
-                {
-                    SetDefault();
-                    Debug.LogError("Add a Figma UI Data to the Figma UI Image.");
-                    return;
-                }
 
-                if (_figmaUiImage.GetFigmaUIData().figmaLink.Length <= 0)
+                if (String.IsNullOrEmpty(_figmaUiImage.GetFigmaLink()))
                 {
                     SetDefault();
-                    Debug.LogError("Add a Figma Link to the Figma UI Data.");
+                    Debug.LogError("Add a Figma Link.");
                     return;
                 }
                 
-                if (_figmaUiImage.GetFigmaUIData().token.Length <= 0)
+                if (String.IsNullOrEmpty(_figmaUiImage.GetToken()))
                 {
                     SetDefault();
-                    Debug.LogError("Add a Figma Token to the Figma UI Data.");
+                    Debug.LogError("Add a Figma Token.");
                     return;
                 }
                 
