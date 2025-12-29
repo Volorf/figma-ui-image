@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Specialized;
+using System.IO;
+using System.Threading.Tasks;
 using System.Web;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -68,6 +70,32 @@ namespace Volorf.FigmaUIImage
             figmaLink = link;
             _token = token;
             UpdateFigmaImage();
+        }
+
+        public void SaveAsAsset()
+        {
+            if (_texture == null)
+            {
+                Debug.LogError("Figma Image texture is empty");
+                return;
+            }
+            
+            string path = "Assets/Volorf/Figma UI Image/";
+            string fileName = $"FigmaUIImage_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
+            
+            Texture2D texture2D = _texture as Texture2D;
+            
+            SaveTextureAsAsset(texture2D, path, fileName).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Debug.LogError($"Failed to save image: {task.Exception}");
+                }
+                else
+                {
+                    Debug.Log($"Image saved as {path}/{fileName}");
+                }
+            });
         }
         
         public void UpdateFigmaImage()
@@ -322,6 +350,18 @@ namespace Volorf.FigmaUIImage
             string strD= $"{curDT.Year}.{curDT.Month}.{curDT.Day}";
             string strT = $"{curDT.Hour}:{curDT.Minute}:{curDT.Second}";
             return $"{strD} {strT}";
+        }
+        
+        private async Task SaveTextureAsAsset(Texture2D texture, string path, string fileName)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            
+            string fullPath = Path.Combine(path, fileName);
+            await File.WriteAllBytesAsync(fullPath, texture.EncodeToPNG());
+            AssetDatabase.Refresh();
         }
     }
 }
