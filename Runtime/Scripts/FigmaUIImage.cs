@@ -29,6 +29,7 @@ namespace Volorf.FigmaUIImage
         
         string _figmaFileKey;
         bool _isLinkValid;
+        string _token;
         
         public Texture texture
         {
@@ -61,6 +62,13 @@ namespace Volorf.FigmaUIImage
         {
             return figmaLink;
         }
+
+        public void UpdateFigmaImage(string link, string token)
+        {
+            figmaLink = link;
+            _token = token;
+            UpdateFigmaImage();
+        }
         
         public void UpdateFigmaImage()
         {
@@ -70,7 +78,7 @@ namespace Volorf.FigmaUIImage
                 return;
             }
 
-            if (String.IsNullOrEmpty(GetToken()))
+            if (String.IsNullOrEmpty(_token))
             {
                 Debug.LogError("Figma Token field is empty");
                 return;
@@ -94,6 +102,7 @@ namespace Volorf.FigmaUIImage
         void Awake()
         {
             _rawImage = GetComponent<RawImage>();
+            _token = GetToken();
             
             #if UNITY_EDITOR
                 _defaultTexture = GetPreview("FigImagePlaceholder");
@@ -183,7 +192,7 @@ namespace Volorf.FigmaUIImage
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
-                webRequest.SetRequestHeader("X-FIGMA-TOKEN", GetToken());
+                webRequest.SetRequestHeader("X-FIGMA-TOKEN", _token);
                 yield return webRequest.SendWebRequest();
 
                 switch (webRequest.result)
@@ -213,7 +222,7 @@ namespace Volorf.FigmaUIImage
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
-                webRequest.SetRequestHeader("X-FIGMA-TOKEN", GetToken());
+                webRequest.SetRequestHeader("X-FIGMA-TOKEN", _token);
                 yield return webRequest.SendWebRequest();
 
                 switch (webRequest.result)
