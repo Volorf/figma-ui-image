@@ -100,6 +100,8 @@ namespace Volorf.FigmaUIImage
         
         public void UpdateFigmaImage()
         {
+            _token = GetToken();
+            
             if (String.IsNullOrEmpty(figmaLink))
             {
                 Debug.LogError("Figma Link field is empty");
