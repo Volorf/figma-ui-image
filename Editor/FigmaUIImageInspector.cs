@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -27,9 +29,12 @@ namespace Volorf.FigmaUIImage
                 _previewContainer = _root.Q<VisualElement>("Container");
                 _imageDescription = _root.Q<Label>("imageDescription");
                 Button updateButton = _root.Q<Button>("UpdateButton");
+                Button saveAsAssetButton = _root.Q<Button>("SaveAsAssetButton");
                 
                 // Subscriptions
                 updateButton.RegisterCallback<ClickEvent>(UpdateFigmaImage);
+                saveAsAssetButton.RegisterCallback<ClickEvent>(SaveAsAsset);
+                
                 _figmaUiImage.OnUiImageUpdated.AddListener(UpdatePreview);
                 _figmaUiImage.OnUploadingFailed.AddListener(SetDefault);
                 
@@ -68,6 +73,12 @@ namespace Volorf.FigmaUIImage
                 }
                 
                 _figmaUiImage.UpdateFigmaImage();
+            }
+
+            void SaveAsAsset(ClickEvent ev)
+            {
+                _figmaUiImage.SaveAsAsset();
+                Debug.Log("Saving Figma Image");
             }
 
             void StartPreloading()
