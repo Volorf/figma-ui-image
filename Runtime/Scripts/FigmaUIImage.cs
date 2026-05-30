@@ -7,7 +7,9 @@ using System.Web;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -84,7 +86,13 @@ namespace Volorf.FigmaUIImage
             string fileName = $"FigmaUIImage_{System.DateTime.Now:yyyyMMdd_HHmmss}.png";
             
             Texture2D texture2D = _texture as Texture2D;
-            
+
+            if (texture2D == null)
+            {
+                Debug.LogError("Figma Image texture is not a Texture2D and cannot be saved.");
+                return;
+            }
+
             SaveTextureAsAsset(texture2D, path, fileName).ContinueWith(task =>
             {
                 if (task.IsFaulted)
@@ -271,7 +279,6 @@ namespace Volorf.FigmaUIImage
                     case UnityWebRequest.Result.Success:
                         string js = webRequest.downloadHandler.text;
                         JSONNode info = JSON.Parse(js);
-                        // Debug.Log(info);
                         // 7 is nodes
                         _figmaSelectionName = info[7][0][0][1];
                         SetFigmageName(_figmaSelectionName);
@@ -336,7 +343,7 @@ namespace Volorf.FigmaUIImage
             #if UNITY_EDITOR
                 string[] links = AssetDatabase.FindAssets(assetName, null);
                 
-                if (links != null)
+                if (links != null && links.Length > 0)
                 {
                     string path = AssetDatabase.GUIDToAssetPath(links[0]);
                     preview = (Texture)AssetDatabase.LoadAssetAtPath(path, typeof(Texture));

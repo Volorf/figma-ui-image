@@ -20,7 +20,7 @@ namespace Volorf.FigmaUIImage
 
             public override VisualElement CreateInspectorGUI()
             {
-                _ui = Resources.Load<VisualTreeAsset>("FigmaUiImageInspector");
+                _ui = Resources.Load<VisualTreeAsset>("FigmaUIImageInspector");
                 _root = new VisualElement();
                 _figmaUiImage = target as FigmaUIImage;
                 _ui.CloneTree(_root);

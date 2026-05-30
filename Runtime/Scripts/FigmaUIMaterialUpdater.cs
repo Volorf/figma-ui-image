@@ -25,6 +25,11 @@ namespace Volorf.FigmaUIImage
         
         void UpdateMaterialTexture(FigmaUIImageData data)
         {
+            if (material == null)
+            {
+                Debug.LogError("FigmaUIImageMaterialUpdater: No material assigned.");
+                return;
+            }
             material.mainTexture = data.GetTexture();
             #if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(material);
