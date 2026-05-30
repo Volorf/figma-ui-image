@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(34, 34, 34); min-height: 240px; max-height: 240px; margin-top: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-top: 0;">
+    <ui:VisualElement name="VisualElement" style="flex-grow: 1; background-color: rgb(34, 34, 34); min-height: 240px; max-height: 240px; margin-top: 0; border-top-left-radius: 4px; border-bottom-left-radius: 4px; border-top-right-radius: 4px; border-bottom-right-radius: 4px; padding-top: 0; margin-right: 6px; margin-left: 6px;">
         <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: auto; height: auto; min-height: auto; max-height: 240px; max-width: 100%; min-width: auto; align-self: center; justify-content: center; align-items: center; -unity-background-scale-mode: scale-to-fit;" />
     </ui:VisualElement>
-    <ui:Label tabindex="-1" text="No Image" display-tooltip-when-elided="true" name="imageDescription" class="description" style="margin-top: 8px; margin-bottom: 0; padding-left: 0; padding-right: 0;" />
-    <ui:FloatField label="Scale" value="2" binding-path="imageScale" name="Scaler" picking-mode="Ignore" style="margin-top: 16px; margin-left: 0; margin-right: 0; margin-bottom: 0;" />
-    <ui:TextField picking-mode="Ignore" label="Figma Link" multiline="true" binding-path="figmaLink" is-delayed="false" name="FigmaLink" style="margin-top: 16px; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-direction: column; flex-wrap: nowrap; white-space: normal; height: 83px;" />
-    <ui:Button text="Save As Asset" display-tooltip-when-elided="true" name="SaveAsAssetButton" style="margin-top: 16px; min-height: 24px; opacity: 1;" />
-    <ui:Button text="Update" display-tooltip-when-elided="true" name="UpdateButton" style="margin-top: 4px; min-height: 24px; opacity: 1;" />
+    <ui:Label tabindex="-1" text="No Image" display-tooltip-when-elided="true" name="imageDescription" class="description" style="margin-top: 8px; margin-bottom: 0; padding-left: 0; padding-right: 0; margin-right: 6px; margin-left: 6px;" />
+    <ui:FloatField label="Scale" value="2" binding-path="imageScale" name="Scaler" picking-mode="Ignore" style="margin-top: 16px; margin-left: 6px; margin-right: 6px; margin-bottom: 0;" />
+    <ui:TextField picking-mode="Ignore" label="Figma Link" multiline="true" binding-path="figmaLink" is-delayed="false" name="FigmaLink" style="margin-top: 16px; margin-right: 6px; margin-bottom: 0; margin-left: 6px; flex-direction: column; flex-wrap: nowrap; white-space: normal; height: 83px;" />
+    <ui:Button text="Save As Asset" display-tooltip-when-elided="true" name="SaveAsAssetButton" style="margin-top: 16px; min-height: 24px; opacity: 1; height: 24px; margin-left: 6px; margin-right: 6px;" />
+    <ui:Button text="Update" display-tooltip-when-elided="true" name="UpdateButton" style="margin-top: 4px; min-height: 24px; opacity: 1; height: 24px; margin-right: 6px; margin-left: 6px;" />
 </ui:UXML>

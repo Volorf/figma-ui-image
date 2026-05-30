@@ -26,17 +26,20 @@ To do that you need a few things:
 > [!TIP]
 > Learn more about it [here](https://www.figma.com/developers/api#access-tokens)
 
-### How to get a Figma Link
-
-1. Select your design in Figma;
-1. Press the `Share` in the top right corner of Figma and copy the link.
-
 ### How to create a Figma UI Image
-<img src="https://www.olegfrolov.design/images/other/figma_ui_image/figma_ui_image_component_without_figmauidata.png" width="400">
+<img src="https://www.olegfrolov.design/images/other/figma_ui_image/figma_ui_image_ui.png" width="400">
 
 1. Select `Canvas` and Right Mouse Click (call a context menu);
 1. Select `UI/Figma UI Image`;
-1. Create `Figma UI Data`, paste there your token and link and add drag it into the slot.
+1. Paste `Figma Link` and press `Update`.
+
+You can specify the quality of the image by the tweaking the `Scale` field.
+
+### How to get a Figma Link
+<img src="https://www.olegfrolov.design/images/other/figma_ui_image/how_to_get_figma_link.gif" width="800">
+
+1. Select your design in Figma;
+1. Press the `Share` in the top right corner of Figma and copy the link.
 
 ## Support
 Figma UI Image is an open-source project I am developing in my spare time. If you like it, you can support me with [a few cups of coffee](https://www.buymeacoffee.com/volorf).
