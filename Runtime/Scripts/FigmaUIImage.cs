@@ -363,7 +363,10 @@ namespace Volorf.FigmaUIImage
             
             string fullPath = Path.Combine(path, fileName);
             await File.WriteAllBytesAsync(fullPath, texture.EncodeToPNG());
+            
+            #if UNITY_EDITOR
             AssetDatabase.Refresh();
+            #endif
         }
     }
 }
