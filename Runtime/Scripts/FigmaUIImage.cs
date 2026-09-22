@@ -33,7 +33,7 @@ namespace Volorf.FigmaUIImage
         
         string _figmaFileKey;
         bool _isLinkValid;
-        string _token;
+        string _token = string.Empty;
         
         public Texture texture
         {
@@ -59,19 +59,16 @@ namespace Volorf.FigmaUIImage
         // public FigmaUIData GetFigmaUIData() => figmaUIData;
         public string GetToken()
         {
-            return PlayerPrefs.GetString("FIGMA_TOKEN");
+            if (String.IsNullOrEmpty(_token))
+            {
+                _token = PlayerPrefs.GetString("FIGMA_TOKEN");
+            }
+            return _token;
         }
 
         public string GetFigmaLink()
         {
             return figmaLink;
-        }
-
-        public void UpdateFigmaImage(string link, string token)
-        {
-            figmaLink = link;
-            _token = token;
-            UpdateFigmaImage();
         }
 
         public void SaveAsAsset()
@@ -108,7 +105,16 @@ namespace Volorf.FigmaUIImage
         
         public void UpdateFigmaImage()
         {
-            _token = GetToken();
+            if (String.IsNullOrEmpty(_token))
+            {
+                _token = GetToken();
+                
+                if (String.IsNullOrEmpty(_token))
+                {
+                    Debug.LogError("Figma Token field is empty");
+                    return;
+                }
+            }
             
             if (String.IsNullOrEmpty(figmaLink))
             {
@@ -116,12 +122,6 @@ namespace Volorf.FigmaUIImage
                 return;
             }
 
-            if (String.IsNullOrEmpty(_token))
-            {
-                Debug.LogError("Figma Token field is empty");
-                return;
-            }
-            
             #if UNITY_EDITOR
                 texture = GetPreview("FigImagePlaceholder");
             #endif
@@ -139,21 +139,23 @@ namespace Volorf.FigmaUIImage
 
         void Awake()
         {
-            _rawImage = GetComponent<RawImage>();
-            _token = GetToken();
             
-            #if UNITY_EDITOR
-                _defaultTexture = GetPreview("FigImagePlaceholder");
-                _loadingTexture = GetPreview("FigImageLoading");
-            #endif
-            
-            texture = _rawImage.texture == null ? _defaultTexture : _rawImage.texture;
         }
 
         void Start()
         {
             // Debug.LogError("figmaLink from start " + figmaUIData.figmaLink);
             // Debug.LogError("token from start " + figmaUIData.token);
+            
+            _rawImage = GetComponent<RawImage>();
+            _token = GetToken();
+            
+            #if UNITY_EDITOR
+            _defaultTexture = GetPreview("FigImagePlaceholder");
+            _loadingTexture = GetPreview("FigImageLoading");
+            #endif
+            
+            texture = _rawImage.texture == null ? _defaultTexture : _rawImage.texture;
             
             if (_rawImage.texture == null)
             {
