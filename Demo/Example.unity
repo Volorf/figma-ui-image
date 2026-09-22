@@ -417,6 +417,7 @@ GameObject:
   - component: {fileID: 1489834395}
   - component: {fileID: 1489834394}
   - component: {fileID: 1489834397}
+  - component: {fileID: 1489834398}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -441,7 +442,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1100, y: 1100}
+  m_SizeDelta: {x: 320, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1489834394
 MonoBehaviour:
@@ -483,7 +484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 1135256658363615874, guid: 5870042fb38a9488b8b8f9b2b1807a7b, type: 2}
+  m_Texture: {fileID: 2800000, guid: 45ef55c7690bb43f48c702bf46a2bf69, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -511,6 +512,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 5870042fb38a9488b8b8f9b2b1807a7b, type: 2}
+--- !u!114 &1489834398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489834392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 460c18630718b4eaca8695aba85e2980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Volorf.Figmage.Runtime::Volorf.FigmaUIImage.FigmaTokenProvider
+  _tokenAsset: {fileID: 11400000, guid: 1cd5725620353414b87911786829a47f, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

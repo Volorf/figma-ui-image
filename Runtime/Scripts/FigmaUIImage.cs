@@ -20,21 +20,49 @@ namespace Volorf.FigmaUIImage
     [AddComponentMenu("Volorf/Figma UI Image")]
     public class FigmaUIImage : MonoBehaviour, IFigmaImageUpdatable
     {
+        #region EVENTS
+
         public FigmaUIImageEvent OnUiImageUpdated = new FigmaUIImageEvent();
         public UnityEvent OnUploadingFailed = new UnityEvent();
-        
+
+        #endregion
+
+        #region SERIALIZED FIELDS
+
         [SerializeField] float imageScale = 2f;
         [SerializeField] [TextArea(3, 6)] string figmaLink;
         // [SerializeField] FigmaUIData figmaUIData;
-        
+
+        #endregion
+
+        #region CONSTANTS
+
         const string MainFigmaLinkPart = "https://www.figma.com/design/";
         const string BaseFigmaImageUrl = "https://api.figma.com/v1/images/";
         const string BaseFigmaDocumentUrl = "https://api.figma.com/v1/files/";
-        
-        string _figmaFileKey;
-        bool _isLinkValid;
+
+        #endregion
+
+        #region STATE
+
+        RawImage _rawImage;
+        Texture _texture = default;
+        Texture _loadingTexture = default;
+        Texture _defaultTexture = default;
+
         string _token = string.Empty;
-        
+        string _figmaFileKey;
+        string _figmaSelectionName;
+        bool _isLinkValid;
+        bool _updateOnStart;
+
+        float _textureRatio;
+        Vector2 _textureSize;
+
+        #endregion
+
+        #region PROPERTIES
+
         public Texture texture
         {
             get
@@ -47,28 +75,61 @@ namespace Volorf.FigmaUIImage
                 SetRawImage(value);
             }
         }
+
+        #endregion
+
+        #region UNITY CALLBACKS
         
-        Texture _texture = default;
-        Texture _loadingTexture = default;
-        Texture _defaultTexture = default;
-        RawImage _rawImage;
-        float _textureRatio;
-        Vector2 _textureSize;
-        string _figmaSelectionName;
-
-        // public FigmaUIData GetFigmaUIData() => figmaUIData;
-        public string GetToken()
+        void Start()
         {
-            if (String.IsNullOrEmpty(_token))
+            // Debug.LogError("figmaLink from start " + figmaUIData.figmaLink);
+            // Debug.LogError("token from start " + figmaUIData.token);
+            
+            _rawImage = GetComponent<RawImage>();
+            _token = GetToken();
+            
+            #if UNITY_EDITOR
+            _defaultTexture = GetPreview("FigImagePlaceholder");
+            _loadingTexture = GetPreview("FigImageLoading");
+            #endif
+            
+            texture = _rawImage.texture == null ? _defaultTexture : _rawImage.texture;
+            
+            if (_rawImage.texture == null || _updateOnStart)
             {
-                _token = PlayerPrefs.GetString("FIGMA_TOKEN");
+                UpdateFigmaImage(); 
             }
-            return _token;
         }
+        
+        #endregion
 
-        public string GetFigmaLink()
+        #region PUBLIC API
+
+        public void UpdateFigmaImage()
         {
-            return figmaLink;
+            if (string.IsNullOrEmpty(_token))
+            {
+                _token = GetToken();
+                
+                if (string.IsNullOrEmpty(_token))
+                {
+                    Debug.LogError("Figma Token field is empty");
+                    return;
+                }
+            }
+            
+            if (string.IsNullOrEmpty(figmaLink))
+            {
+                Debug.LogError("Figma Link field is empty");
+                return;
+            }
+
+            #if UNITY_EDITOR
+                texture = GetPreview("FigImagePlaceholder");
+            #endif
+            
+            _isLinkValid = true;
+            SetImageFromFigma();
         }
 
         public void SaveAsAsset()
@@ -102,72 +163,91 @@ namespace Volorf.FigmaUIImage
                 }
             });
         }
-        
-        public void UpdateFigmaImage()
-        {
-            if (String.IsNullOrEmpty(_token))
-            {
-                _token = GetToken();
-                
-                if (String.IsNullOrEmpty(_token))
-                {
-                    Debug.LogError("Figma Token field is empty");
-                    return;
-                }
-            }
-            
-            if (String.IsNullOrEmpty(figmaLink))
-            {
-                Debug.LogError("Figma Link field is empty");
-                return;
-            }
 
-            #if UNITY_EDITOR
-                texture = GetPreview("FigImagePlaceholder");
-            #endif
-            
-            _isLinkValid = true;
-            SetImageFromFigma();
+        public void SetToken(string token)
+        {
+            _token = token;
+        }
+        
+        public void SetUpdateOnStart(bool updateOnStart)
+        {
+            _updateOnStart = updateOnStart;
         }
 
-        void SetFigmageName(string name)
+        public string GetToken()
         {
-            transform.name = name;
+            string tempToken = PlayerPrefs.GetString("FIGMA_TOKEN");;
+            if (String.IsNullOrEmpty(_token) || _token != tempToken)
+            {
+                _token = tempToken;
+            }
+            
+            return _token;
+        }
+
+        public string GetFigmaLink()
+        {
+            return figmaLink;
         }
 
         public float GetScale() => imageScale;
-
-        void Awake()
-        {
-            
-        }
-
-        void Start()
-        {
-            // Debug.LogError("figmaLink from start " + figmaUIData.figmaLink);
-            // Debug.LogError("token from start " + figmaUIData.token);
-            
-            _rawImage = GetComponent<RawImage>();
-            _token = GetToken();
-            
-            #if UNITY_EDITOR
-            _defaultTexture = GetPreview("FigImagePlaceholder");
-            _loadingTexture = GetPreview("FigImageLoading");
-            #endif
-            
-            texture = _rawImage.texture == null ? _defaultTexture : _rawImage.texture;
-            
-            if (_rawImage.texture == null)
-            {
-                UpdateFigmaImage(); 
-            }
-        }
 
         public RawImage GetRawImage() => _rawImage;
 
         public Texture GetLoadingTexture() => _loadingTexture;
 
         public Texture GetDefaultTexture() => _defaultTexture;
+
+        public static string GetCurrentDateTime()
+        {
+            DateTime curDT = DateTime.Now;
+            string strD= $"{curDT.Year}.{curDT.Month}.{curDT.Day}";
+            string strT = $"{curDT.Hour}:{curDT.Minute}:{curDT.Second}";
+            return $"{strD} {strT}";
+        }
+
+        #endregion
+
+        #region LINK PARSING
+
+        string GetFileKey(string link)
+        {
+            string cutFirstPartFigmaLink = link.Replace(MainFigmaLinkPart, "");
+            int removeIndex = cutFirstPartFigmaLink.IndexOf("/");
+
+            if (removeIndex < 0)
+            {
+                Debug.LogError("Got an invalid link. Can't parse it.");
+                _isLinkValid = false;
+                return link;
+            }
+            return cutFirstPartFigmaLink.Substring(0, removeIndex);
+        }
+
+        string GetNodeId(string link)
+        {
+            Uri uri = new Uri(link);
+            return HttpUtility.ParseQueryString(uri.Query).Get("node-id");
+        }
+
+        string CombineImageUrl(string baseURL, string fileKey, string nodeId, float scale)
+        {
+            NameValueCollection parsedParams = System.Web.HttpUtility.ParseQueryString(String.Empty);
+            parsedParams.Add("ids", nodeId);
+            parsedParams.Add("scale", scale.ToString());
+            return baseURL + fileKey + "?" + parsedParams.ToString();
+        }
+        
+        string CombineDocumentUrl(string baseURL, string fileKey, string nodeId)
+        {
+            NameValueCollection parsedParams = System.Web.HttpUtility.ParseQueryString(String.Empty);
+            parsedParams.Add("ids", nodeId);
+            return baseURL + fileKey + "/" + "nodes" + "?" + parsedParams.ToString();
+        }
+
+        #endregion
+
+        #region FIGMA REQUESTS
 
         void SetImageFromFigma()
         {
@@ -193,41 +273,6 @@ namespace Volorf.FigmaUIImage
             }
         }
 
-        string CombineImageUrl(string baseURL, string fileKey, string nodeId, float scale)
-        {
-            NameValueCollection parsedParams = System.Web.HttpUtility.ParseQueryString(String.Empty);
-            parsedParams.Add("ids", nodeId);
-            parsedParams.Add("scale", scale.ToString());
-            return baseURL + fileKey + "?" + parsedParams.ToString();
-        }
-        
-        string CombineDocumentUrl(string baseURL, string fileKey, string nodeId)
-        {
-            NameValueCollection parsedParams = System.Web.HttpUtility.ParseQueryString(String.Empty);
-            parsedParams.Add("ids", nodeId);
-            return baseURL + fileKey + "/" + "nodes" + "?" + parsedParams.ToString();
-        }
-
-        string GetFileKey(string link)
-        {
-            string cutFirstPartFigmaLink = link.Replace(MainFigmaLinkPart, "");
-            int removeIndex = cutFirstPartFigmaLink.IndexOf("/");
-
-            if (removeIndex < 0)
-            {
-                Debug.LogError("Got an invalid link. Can't parse it.");
-                _isLinkValid = false;
-                return link;
-            }
-            return cutFirstPartFigmaLink.Substring(0, removeIndex);
-        }
-
-        string GetNodeId(string link)
-        {
-            Uri uri = new Uri(link);
-            return HttpUtility.ParseQueryString(uri.Query).Get("node-id");
-        }
-        
         IEnumerator RequestImageLinkFromFigma(string url)
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
@@ -235,29 +280,22 @@ namespace Volorf.FigmaUIImage
                 webRequest.SetRequestHeader("X-FIGMA-TOKEN", _token);
                 yield return webRequest.SendWebRequest();
 
-                switch (webRequest.result)
+                if (webRequest.result != UnityWebRequest.Result.Success)
                 {
-                    case UnityWebRequest.Result.ConnectionError:
-                        OnUploadingFailed.Invoke();
-                        break;
-                    case UnityWebRequest.Result.DataProcessingError:
-                        OnUploadingFailed.Invoke();
-                        Debug.LogError("Error: " + webRequest.error);
-                        break;
-                    case UnityWebRequest.Result.ProtocolError:
-                        OnUploadingFailed.Invoke();
-                        Debug.LogError("HTTP Error: " + webRequest.error);
-                        break;
-                    case UnityWebRequest.Result.Success:
-                        string js = webRequest.downloadHandler.text;
-                        JSONNode info = JSON.Parse(js);
-                        string linkToImage = info[1][0];
-                        StartCoroutine(RequestImage(linkToImage));
-                        break;
+                    OnUploadingFailed.Invoke();
+                    Debug.LogError(DescribeRequestError(webRequest, "image render"));
+                    yield break;
                 }
+
+                string js = webRequest.downloadHandler.text;
+                JSONNode info = JSON.Parse(js);
+                string linkToImage = info[1][0];
+                StartCoroutine(RequestImage(linkToImage));
             }
         }
         
+        // Only used to name the GameObject after the Figma node. A failure here must not
+        // cancel the image update, so it logs a warning and leaves the current name in place.
         IEnumerator RequestDocumentFromFigma(string url)
         {
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
@@ -265,35 +303,18 @@ namespace Volorf.FigmaUIImage
                 webRequest.SetRequestHeader("X-FIGMA-TOKEN", _token);
                 yield return webRequest.SendWebRequest();
 
-                switch (webRequest.result)
+                if (webRequest.result != UnityWebRequest.Result.Success)
                 {
-                    case UnityWebRequest.Result.ConnectionError:
-                        OnUploadingFailed.Invoke();
-                        break;
-                    case UnityWebRequest.Result.DataProcessingError:
-                        OnUploadingFailed.Invoke();
-                        Debug.LogError("Error: " + webRequest.error);
-                        break;
-                    case UnityWebRequest.Result.ProtocolError:
-                        OnUploadingFailed.Invoke();
-                        Debug.LogError("HTTP Error: " + webRequest.error);
-                        break;
-                    case UnityWebRequest.Result.Success:
-                        string js = webRequest.downloadHandler.text;
-                        JSONNode info = JSON.Parse(js);
-                        // 7 is nodes
-                        _figmaSelectionName = info[7][0][0][1];
-                        SetFigmageName(_figmaSelectionName);
-                        break;
+                    Debug.LogWarning(DescribeRequestError(webRequest, "node name") + ". Keeping the current object name.");
+                    yield break;
                 }
-            }
-        }
 
-        void SetRawImage(Texture t)
-        {
-            _rawImage.rectTransform.sizeDelta = new Vector2(t.width / imageScale,
-                t.height / imageScale);
-            _rawImage.texture = t;
+                string js = webRequest.downloadHandler.text;
+                JSONNode info = JSON.Parse(js);
+                // 7 is nodes
+                _figmaSelectionName = info[7][0][0][1];
+                SetFigmageName(_figmaSelectionName);
+            }
         }
 
         IEnumerator RequestImage(string url)
@@ -318,24 +339,51 @@ namespace Volorf.FigmaUIImage
                     // print("texRatio: " + figmaImageData.GetRatio());
                     
                     OnUiImageUpdated.Invoke(figmaUiImageData);
-                    Debug.Log($"{_figmaSelectionName} has been updated.");
+                    string updatedName = string.IsNullOrEmpty(_figmaSelectionName) ? name : _figmaSelectionName;
+                    Debug.Log($"{updatedName} has been updated.");
 
                     break;
                 case UnityWebRequest.Result.ConnectionError:
-                    OnUploadingFailed.Invoke();
-                    Debug.LogError("Connection Error");
-                    break;
                 case UnityWebRequest.Result.ProtocolError:
-                    OnUploadingFailed.Invoke();
-                    Debug.LogError("Protocol Error");
-                    break;
                 case UnityWebRequest.Result.DataProcessingError:
                     OnUploadingFailed.Invoke();
-                    Debug.LogError("Data Processing Error");
+                    Debug.LogError(DescribeRequestError(request, "image download"));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        // One line per failed request that names the request and, for 429, tells when Figma allows a retry.
+        static string DescribeRequestError(UnityWebRequest request, string requestName)
+        {
+            string message = $"Figma {requestName} request failed: {request.error}";
+
+            if (request.responseCode == 429)
+            {
+                string retryAfter = request.GetResponseHeader("Retry-After");
+                message += string.IsNullOrEmpty(retryAfter)
+                    ? " (rate limited by Figma, wait a minute before updating again)"
+                    : $" (rate limited by Figma, retry after {retryAfter} s)";
+            }
+
+            return message;
+        }
+
+        #endregion
+
+        #region HELPERS
+
+        void SetRawImage(Texture t)
+        {
+            _rawImage.rectTransform.sizeDelta = new Vector2(t.width / imageScale,
+                t.height / imageScale);
+            _rawImage.texture = t;
+        }
+
+        void SetFigmageName(string name)
+        {
+            transform.name = name;
         }
 
         static Texture GetPreview(string assetName)
@@ -354,14 +402,6 @@ namespace Volorf.FigmaUIImage
 
             return preview;
         }
-
-        public static string GetCurrentDateTime()
-        {
-            DateTime curDT = DateTime.Now;
-            string strD= $"{curDT.Year}.{curDT.Month}.{curDT.Day}";
-            string strT = $"{curDT.Hour}:{curDT.Minute}:{curDT.Second}";
-            return $"{strD} {strT}";
-        }
         
         private async Task SaveTextureAsAsset(Texture2D texture, string path, string fileName)
         {
@@ -377,5 +417,7 @@ namespace Volorf.FigmaUIImage
             AssetDatabase.Refresh();
             #endif
         }
+
+        #endregion
     }
 }
